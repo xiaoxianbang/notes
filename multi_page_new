@@ -4,13 +4,13 @@ var orderIds = new Array();//order id list
 var currentThreadSenderIds = new Array();// sender id list
 
 //如果pageSize小于或等于0，就会从当前页一直获取信息到最后一页
-var pageSize = 10;//在这里配置页数：从当前页到开始，获取多少页的信息，如配置10，就是从当前页开始，获取10页数据
+var pageSize = 10;//在这里配置页数：从当前页到开始，获取pageSize + 1页的信息;如配置10，就是从当前页开始，获取11页数据
 var page = 0;
 
 // button "->" for paging to next page
 var nextPageBtn = document.getElementsByClassName("a-last");
 
-var pageInterval =setInterval(function(){
+var pageInterval = setInterval(function(){
 	
 	var threadLists = document.getElementsByClassName("click-thread");// item list
 	var pageThreadNum = threadLists.length;// item list length
@@ -19,7 +19,7 @@ var pageInterval =setInterval(function(){
   
 	var clickOrGet = 1;//1 click, 0 get
   
-	var itemInterval =setInterval(function(){
+	var itemInterval = setInterval(function(){
     
 		if(pageThread < pageThreadNum){
 			
@@ -49,6 +49,7 @@ var pageInterval =setInterval(function(){
 				nextPageBtn[0].click();
 				if(pageSize > 0) page++;
 			}else{
+				clearInterval(itemInterval); 
 				clearInterval(pageInterval); 
 				for(var i = 0; i < orderIds.length; i++){//print
 					document.write(orderIds[i] + "		" + currentThreadSenderIds[i] + "<br>");
@@ -61,4 +62,4 @@ var pageInterval =setInterval(function(){
 
 
 //item interval 和 page interval根据网速调整即可注意以下刷新规律：
-// 点击翻页所用的时间 = 一个消息的时间 * 10 + 预留部分时间 ,（1100 * 10 + ？ = 13000）
+// 点击翻页所用的时间 = 一个消息的时间 * 21 ,（1200 * 21 = 25200）
