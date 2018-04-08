@@ -1,0 +1,31 @@
+//单页数据获取
+var orderIds = new Array();//order id list
+var currentThreadSenderIds = new Array();// sender id list
+
+var threadLists = document.getElementsByClassName("click-thread");// item list
+var pageThreadNum = threadLists.length;// item list length
+
+var pageThread = 0;
+var itemInterval =setInterval(function(){
+	if(pageThread < pageThreadNum){
+		
+		var orderStr = document.getElementById("threadSubject").innerText;
+		if(orderStr.indexOf("Order:") >= 0){
+			var orderArr = orderStr.split("Order:");
+			orderStr= orderArr[orderArr.length - 1].substr(0, 20);
+		}else{
+			orderStr = "000-0000000-0000000"; //if item contains no order id, change to 000-0000000-0000000
+		}
+		
+		orderIds[orderIds.length] = orderStr;// order id
+		currentThreadSenderIds[currentThreadSenderIds.length] = document.getElementById("currentThreadSenderId").value;// sender id 
+		
+		threadLists[pageThread].click();//click item, navigate to next item
+	}else{
+		for(var i = 0; i < orderIds.length; i++){//print
+			document.write(orderIds[i] + "		" + currentThreadSenderIds[i] + "<br>");
+		}
+		clearInterval(itemInterval); 
+	}
+	pageThread++;//item grouth
+}, 1100);// item interval, 点击页面上一个消息的时间
