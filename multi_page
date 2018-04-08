@@ -19,12 +19,16 @@ var pageInterval =setInterval(function(){
 	var itemInterval =setInterval(function(){
 		if(pageThread < pageThreadNum){
 			var orderStr = document.getElementById("threadSubject").innerText;
-			if(orderStr.indexOf("Order:") >= 0){
-				var orderArr = orderStr.split("Order:");
-				orderStr= orderArr[orderArr.length - 1].substr(0, 20);
-			}else{
-				orderStr = "000-0000000-0000000"; //if item contains no order id, change to 000-0000000-0000000
-			}
+			//if(orderStr.indexOf("Order:") >= 0){
+			//	var orderArr = orderStr.split("Order:");
+			//	orderStr= orderArr[orderArr.length - 1].substr(0, 20);
+			//}else{
+			//	orderStr = "000-0000000-0000000"; //if item contains no order id, change to 000-0000000-0000000
+			//}
+			
+			var startPos = orderStr.search(/[0-9]{3}-[0-9]{7}-[0-9]{7}/);
+			orderStr = orderStr.substr(startPos, 19);
+			if(orderStr.length != 19) orderStr = "000-0000000-0000000";
 			
 			orderIds[orderIds.length] = orderStr;// order id
 			currentThreadSenderIds[currentThreadSenderIds.length] = document.getElementById("currentThreadSenderId").value;// sender id 
