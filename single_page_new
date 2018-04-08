@@ -14,8 +14,8 @@ var itemInterval =setInterval(function(){
 		if(clickOrGet == 1){//click
 			clickOrGet = 0;
 			threadLists[pageThread].click();//click item, navigate to next item
-			console.log(page + "->" + pageThread + "  --click");
-		else{
+			console.log("->" + pageThread + "  --click");
+		}else{
 			clickOrGet = 1;
 			
 			var orderStr = document.getElementById("threadSubject").innerText;
