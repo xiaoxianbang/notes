@@ -1,0 +1,31 @@
+var page = 0;
+var pageSize = 100;
+var pageInterval = setInterval(function() { 
+	if(page < pageSize){
+		//for(var i = 0; i < 10; i++){
+			var item = 0;
+			var itemSize = 10;
+			var clickOrGet = 1;//1 click, 0 get
+			
+				var itemIterval =  setInterval(function(){
+					if(item < itemSize){
+						if(clickOrGet == 1){//click
+							clickOrGet = 0;
+							console.log(page + "->" + item + "  --click");
+						}else{//get
+							clickOrGet = 1;
+							console.log(page + "->" + item + "  --get information");
+							item++;//只有在get information之后才会去增加
+						}
+					}else{
+						clearInterval(itemIterval);
+					}
+				}, 1000);
+			
+		//}
+	}else{
+		clearInterval(pageInterval);
+		console.log("final log");
+	}	
+	page++;
+}, 21000);
