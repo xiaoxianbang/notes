@@ -1,0 +1,46 @@
+//单页数据获取
+var orderIds = new Array();//order id list
+var currentThreadSenderIds = new Array();// sender id list
+
+var threadLists = document.getElementsByClassName("click-thread");// item list
+var pageThreadNum = threadLists.length;// item list length
+
+var pageThread = 0;
+
+var clickOrGet = 1;//1 click, 0 get
+
+var itemInterval =setInterval(function(){
+	if(pageThread < pageThreadNum){
+		if(clickOrGet == 1){//click
+			clickOrGet = 0;
+			threadLists[pageThread].click();//click item, navigate to next item
+			console.log("->" + pageThread + "  --click");
+		}else{
+			clickOrGet = 1;
+			
+			var orderStr = "";
+			var aTag = document.getElementsByTagName("a");
+			cc: for(var i = 0; i < aTag.length; i++){
+				if(aTag[i].href.indexOf("/gp/orders-v2/details?ie=UTF8&orderID=") >= 0){
+					var startPos = aTag[i].href.search(/[0-9]{3}-[0-9]{7}-[0-9]{7}/);
+					orderStr = aTag[i].href.substr(startPos, 19);
+					break cc;
+				}
+			}
+			if(orderStr.length == 0) orderStr = "000-0000000-0000000";
+			
+			orderIds[orderIds.length] = orderStr;// order id
+			currentThreadSenderIds[currentThreadSenderIds.length] = document.getElementById("currentThreadSenderId").value;// sender id
+			
+			console.log("->" + pageThread + "  --get info: " + orderIds[orderIds.length - 1] + "		" + currentThreadSenderIds[currentThreadSenderIds.length - 1]);
+			
+			pageThread++;//只有在get information之后才会去增加
+		}
+	}else{
+		for(var i = 0; i < orderIds.length; i++){//print
+			document.write(orderIds[i] + "		" + currentThreadSenderIds[i] + "<br>");
+		}
+		clearInterval(itemInterval); 
+	}
+	
+}, 1300);// item interval, 点击页面上一个消息的时间
