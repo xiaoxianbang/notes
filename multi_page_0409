@@ -1,0 +1,71 @@
+//多页数据获取，问题：第一页前面两个数据会重复,可以先用单页获取数据来解决
+
+var orderIds = new Array();//order id list
+var currentThreadSenderIds = new Array();// sender id list
+
+//如果pageSize小于或等于0，就会从当前页一直获取信息到最后一页
+var pageSize = 10;//在这里配置页数：从当前页到开始，获取pageSize + 1页的信息;如配置10，就是从当前页开始，获取11页数据
+var page = 0;
+
+// button "->" for paging to next page
+var nextPageBtn = document.getElementsByClassName("a-last");
+
+var pageInterval = setInterval(function(){
+	
+	var threadLists = document.getElementsByClassName("click-thread");// item list
+	var pageThreadNum = threadLists.length;// item list length
+	
+	var pageThread = 0;
+  
+	var clickOrGet = 1;//1 click, 0 get
+  
+	var itemInterval = setInterval(function(){
+    
+		if(pageThread < pageThreadNum){
+			
+			if(clickOrGet == 1){//click
+				clickOrGet = 0;
+				
+				threadLists[pageThread].click();//click item, navigate to next item
+				
+				console.log(page + "->" + pageThread + "  --click");
+			}else{//get
+				clickOrGet = 1;
+				
+				var orderStr = "";
+				var aTag = document.getElementsByTagName("a");
+				cc: for(var i = 0; i < aTag.length; i++){
+					if(aTag[i].href.indexOf("/gp/orders-v2/details?ie=UTF8&orderID=") >= 0){
+						var startPos = aTag[i].href.search(/[0-9]{3}-[0-9]{7}-[0-9]{7}/);
+						orderStr = aTag[i].href.substr(startPos, 19);
+						break cc;
+					}
+				}
+				if(orderStr.length == 0) orderStr = "000-0000000-0000000";
+				
+				orderIds[orderIds.length] = orderStr;// order id
+				currentThreadSenderIds[currentThreadSenderIds.length] = document.getElementById("currentThreadSenderId").value;// sender id
+				
+				console.log(page + "->" + pageThread + "  --get info: " + orderIds[orderIds.length - 1] + "		" + currentThreadSenderIds[currentThreadSenderIds.length - 1]);
+				
+				pageThread++;//只有在get information之后才会去增加
+			}
+		}else{
+			if(nextPageBtn[0].className.indexOf('disable') == -1 && page < pageSize) {
+				nextPageBtn[0].click();
+				if(pageSize > 0) page++;
+			}else{
+				clearInterval(itemInterval); 
+				clearInterval(pageInterval); 
+				for(var i = 0; i < orderIds.length; i++){//print
+					document.write(orderIds[i] + "		" + currentThreadSenderIds[i] + "<br>");
+				}
+			}
+			clearInterval(itemInterval); 
+		}
+	}, 1200);// item interval, 点击页面上一个消息的时间
+}, 25200);// page interval, 点击翻页所用的时间
+
+
+//item interval 和 page interval根据网速调整即可注意以下刷新规律：
+// 点击翻页所用的时间 = 一个消息的时间 * 21 ,（1200 * 21 = 25200）
