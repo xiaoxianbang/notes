@@ -1,0 +1,101 @@
+
+1. email:
+
+	username: cyrus.xiao@archos.com
+	password: archos1016
+
+2. pc:
+	username: cyrus
+	password: 123456
+
+3. config the jdk(install open-jdk8)
+
+	a. install sw
+
+		apt-get update
+		sudo apt-get install openjdk-8-jdk
+
+	b. set env to file /etc/profile
+
+		export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+		export JRE_HOME=${JAVA_HOME}/jre
+		export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+		export PATH=${JAVA_HOME}/bin:$PATH
+
+4. config the android env
+
+	a. 
+	b. 
+
+5. System Settings --> Details --> Device name --> fix the device name
+
+6. Download and install the Sougo IME, then excute the " fcitx-configtool" on the terminal
+
+7. xchat --> change to : quassel
+	sudo apt-get install quassel
+	about: http://wiki.ubuntu.org.cn/Quassel
+
+	test the quassel, no use, then try hexchat
+
+	sudo apt-get install hexchat
+
+
+
+	
+8. android studio:
+	
+	a. download:http://www.android-studio.org/
+	b. extract the move to /opt folder
+	c. exe: sh /opt/android_studio/***/bin/studio.sh to start up the as
+	d. check the as configuration, the sdk folder is:/root/Android/Sdk
+	e. set env to /etc/profile, check detail from the file mentioned
+		
+
+9. adb recognition:
+	
+	a. lsusb to check the usb detail, like: Bus 002 Device 009: ID 0e79:201c Archos, Inc.
+	b. touch a file to path: /etc/udev/rules.d/ , then fill in with following content:
+		SUBSYSTEM=="usb", ATTRS{idVendor}=="0e79", ATTRS{idProduct}=="201c",MODE="0666"
+	c. exe: sudo chmod a+x android.rules, android.rule is the file name
+
+10. ubuntu android compile env
+	
+
+11. git installation
+	
+	a. sudo apt-get install git
+	b. cos the ubuntu wont support the git tab completion, so install another sw:
+		sudo apt-get install bash-completion (useless)
+
+12. git clone the remoute repositories:
+	
+	git clone cyrus@192.168.1.220:/home/git/repositories/hello7.git
+		password is:123456
+
+13. ssh login to the 192.168.1.220
+	
+	ssh cyrus@192.168.1.220, password is: 123456
+
+14. http://blog.51cto.com/13572654/2068219
+
+	web server and client server create
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
