@@ -80,6 +80,12 @@
 
 	web server and client server create
 
+15. gitk: sudo apt-get intall gitk
+	
+	Note: you will see the detail modification when you sudo open the gitk, normal user will just see the log simple info
+		
+16. git-cola: sudo apt-get install git-cola
+
 
 
 
